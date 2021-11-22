@@ -6,9 +6,9 @@ const app = express();
 
 //========== For The Json Formate Understand Backend Server===========
 app.use(express.json());
-app.use(cors());
+
 // ========For Not Sequare Connection========
-// app.use(cors());
+app.use(cors());
 
 // =======Runing Port Define Here========
 const port = process.env.PORT;
