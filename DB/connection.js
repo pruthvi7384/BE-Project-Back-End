@@ -27,7 +27,7 @@ mongoose.connection.once('open',()=>{
     // Databse Connection Watch
     const changeStream = mongoose.connection.collection('chats').watch();
     // Change The Database Collection Pusher Useed
-    changeStream.on('change', (change) => {
+      changeStream.on('change', (change) => {
       pusher.trigger('messages-channel', 'newMessage', {
         'change': change
       });

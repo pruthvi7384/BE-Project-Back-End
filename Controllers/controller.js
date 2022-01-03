@@ -19,11 +19,11 @@ export const Home = (req, res)=>{
 export const Signup = async (req, res)=>{
 
     // ========Get All filed from user=======
-    const { name, email, password, cpassword, crteatedAt } = req.body;
+    const { name, email, password, cpassword, crteatedAt, role } = req.body;
 
     // ========Cheack filed is not empty=======
-    if(!name || !email || !password || !cpassword || !crteatedAt){
-        res.status(422).json({error: "Please Filed All Filleds Properly !"});
+    if(!name || !email || !password || !cpassword || !role){
+        res.status(422).json({message: "Please Filed All Filleds Properly !"});
     }
 
     // =========Send Data=========
@@ -34,7 +34,7 @@ export const Signup = async (req, res)=>{
         }else if(password != cpassword){
             res.status(422).json({message: "Password Is Not Matching !"});
         }else{
-            const user = new User({name,email,password,cpassword,crteatedAt});
+            const user = new User({name,email,password,cpassword,crteatedAt,role});
             await user.save();
             res.status(201).json({message:"User Register Successfuly"});
         }
@@ -47,7 +47,7 @@ export const Signup = async (req, res)=>{
 export const Login = async (req, res)=>{
     try{    
        // ========email and password from user=======
-        const { email, password } = req.body;
+        const { email, password, } = req.body;
 
         // ========Cheack filed is not empty=======
         if(!email || !password){
@@ -63,7 +63,7 @@ export const Login = async (req, res)=>{
             const isMatch = await bcrypt.compare(password, login.password);
             // =============Cheack Password Here=============
             if(isMatch){
-                res.status(200).json({message: "Login Successfuly"});
+                res.status(200).json({message: "Login Successfuly",login:login});
             }else{
                 res.status(422).json({message: "Your Login Cradntial is wrong Please Check and try again later!"});
             }
