@@ -3,7 +3,8 @@ import mongoose from 'mongoose';
 const QuestionSchema = new mongoose.Schema({
     user_id:{
         type: String,
-        required: false
+        required: true,
+        default: 'NA'
     },
     user_name:{
         type: String,
@@ -19,19 +20,23 @@ const QuestionSchema = new mongoose.Schema({
     },
     ask_date:{
         type: Date,
-        required: true
+        required: true,
+        default: Date.now
     },
     answer:{
-        type: String,
-        required: true
+        type: Date,
+        required: true,
+        default: Date.now
     },
     answer_date:{
-        type: Date,
-        required: true
+        type: String,
+        required: true,
+        default: 'NA'
     },
     doctor_id:{
         type:String,
-        required: true
+        required: true,
+        default:'NA'
     }
 })
 

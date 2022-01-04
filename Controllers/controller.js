@@ -4,6 +4,12 @@ import User from "../Modules/UserSchema.js";
 // ==========Chat Schema Here=========
 import Chat from "../Modules/ChatSchema.js";
 
+// ===========Quection Schema Here======
+import Question from "../Modules/QuestionSchema.js";
+
+// ============Feedback Schema Here======
+import Feedback from "../Modules/FeedbackSchema.js";
+
 // ==========bcrypt for password matching========
 import bcrypt from 'bcryptjs';
 
@@ -14,89 +20,243 @@ import Pusher from 'pusher';
 export const Home = (req, res)=>{
     res.status(200).send("Home Page Of Early Predication Of Life Style Diseases");
 }
+// =======Starting Account API============
 
-// ===========Signup Post========
-export const Signup = async (req, res)=>{
+    // ===========Signup Post========
+    export const Signup = async (req, res)=>{
 
-    // ========Get All filed from user=======
-    const { name, email, password, cpassword, crteatedAt, role } = req.body;
-
-    // ========Cheack filed is not empty=======
-    if(!name || !email || !password || !cpassword || !role){
-        res.status(422).json({message: "Please Filed All Filleds Properly !"});
-    }
-
-    // =========Send Data=========
-    try{
-        const userExist = await User.findOne({ email: email });
-        if(userExist) {
-            res.status(422).json({message: "Email Id Alrady Exists !"});
-        }else if(password != cpassword){
-            res.status(422).json({message: "Password Is Not Matching !"});
-        }else{
-            const user = new User({name,email,password,cpassword,crteatedAt,role});
-            await user.save();
-            res.status(201).json({message:"User Register Successfuly"});
-        }
-    }catch(err){
-        console.log(err);
-    }
-}
-
-// ===========Login Post=========
-export const Login = async (req, res)=>{
-    try{    
-       // ========email and password from user=======
-        const { email, password, } = req.body;
+        // ========Get All filed from user=======
+        const { name, email, password, cpassword, crteatedAt, role } = req.body;
 
         // ========Cheack filed is not empty=======
-        if(!email || !password){
-            res.status(422).json({message: "Please Enter Both Fieleds Properly !"});
+        if(!name || !email || !password || !cpassword || !role){
+            res.status(422).json({message: "Please Filed All Filleds Properly !"});
         }
 
-        // ==========Match Email id exist or not===========
-        const login = await User.findOne({email: email});
-
-        // ===========Email Id Exist Then Cheack Password=========
-        if(login){
-            // ==========Compare Bycript Password Here========
-            const isMatch = await bcrypt.compare(password, login.password);
-            // =============Cheack Password Here=============
-            if(isMatch){
-                res.status(200).json({message: "Login Successfuly",login:login});
+        // =========Send Data=========
+        try{
+            const userExist = await User.findOne({ email: email });
+            if(userExist) {
+                res.status(422).json({message: "Email Id Alrady Exists !"});
+            }else if(password != cpassword){
+                res.status(422).json({message: "Password Is Not Matching !"});
             }else{
-                res.status(422).json({message: "Your Login Cradntial is wrong Please Check and try again later!"});
+                const user = new User({name,email,password,cpassword,crteatedAt,role});
+                await user.save();
+                res.status(201).json({message:"User Register Successfuly"});
             }
-        }else{
-            res.status(422).json({message: "User Not Register Please First Register!"});
+        }catch(err){
+            console.log(err);
         }
-    }catch(e){
-        console.log(e.message);
     }
-}
 
-// ===========Chat Post==========
-export const ChatPost = async(req, res)=>{
-    // ========get Cmessage from user=======
-    const { name, message, timestamp} = req.body;
-    try{
-        const chat = new Chat({ name, message, timestamp});
-        await chat.save();
-        res.status(201).json({message:"Message Succesfuly Send"});
-    }catch(e){
-        console.log(e.message);
-    }
-}
+    // ===========Login Post=========
+    export const Login = async (req, res)=>{
+        try{    
+        // ========email and password from user=======
+            const { email, password, } = req.body;
 
-// ===========Chat Get===========
-export const ChatGet = async (req, res)=>{
-    try{
-        const messages = await Chat.find()
-        messages.sort((b,a)=>{
-            return a.timestamp - b.timestamp;
-        });
-        res.status(200).send(messages);
-    }catch(e){
-        console.log(e.message);
+            // ========Cheack filed is not empty=======
+            if(!email || !password){
+                res.status(422).json({message: "Please Enter Both Fieleds Properly !"});
+            }
+
+            // ==========Match Email id exist or not===========
+            const login = await User.findOne({email: email});
+
+            // ===========Email Id Exist Then Cheack Password=========
+            if(login){
+                // ==========Compare Bycript Password Here========
+                const isMatch = await bcrypt.compare(password, login.password);
+                // =============Cheack Password Here=============
+                if(isMatch){
+                    res.status(200).json({message: "Login Successfuly",login:login});
+                }else{
+                    res.status(422).json({message: "Your Login Cradntial is wrong Please Check and try again later!"});
+                }
+            }else{
+                res.status(422).json({message: "User Not Register Please First Register!"});
+            }
+        }catch(e){
+            console.log(e.message);
+        }
     }
-}
+
+    // ========Delete Specific Account========
+    export const removeAccount = async (req, res)=>{
+        try{
+        await User.findOneAndDelete({_id: req.params.id});
+        res.status(201).json({message:"Account Removed Sussesully."});
+        }catch(e){
+            console.log(e.message);
+        }
+    }
+
+// ==========X==Ending Account API==X===========
+
+// =========Starting Comman Chat API Creation============
+
+    // ===========Chat Post==========
+    export const ChatPost = async(req, res)=>{
+        // ========get message from user=======
+        const { name, message, timestamp} = req.body;
+        try{
+            const chat = new Chat({ name, message, timestamp});
+            await chat.save();
+            res.status(201).json({message:"Message Succesfuly Send"});
+        }catch(e){
+            console.log(e.message);
+        }
+    }
+
+    // ===========Chat Get===========
+    export const ChatGet = async (req, res)=>{
+        try{
+            const messages = await Chat.find()
+            messages.sort((b,a)=>{
+                return a.timestamp - b.timestamp;
+            });
+            res.status(200).send(messages);
+        }catch(e){
+            console.log(e.message);
+        }
+    }
+
+// =======X==Ending Comman Chat API Creation==X==========
+
+// ==========Starting Quection API==============
+
+    // ==========Send Quection========
+    export const QuectionPost = async(req, res)=>{
+
+        //=========== Get Quection Deatiles From User==========
+        const {user_id,user_name, user_email, question, ask_date, answer, doctor_id} = req.body;
+
+        // ========Cheack filed is not empty=======
+        if(!user_name || !user_email || !question){
+            res.status(422).json({message: "Please Filed All Filleds Properly !"});
+        }
+
+        // =========Send Data=========
+        try{
+            const quection = new Question({user_id,user_name, user_email, question, ask_date, answer, doctor_id});
+            await quection.save();
+            res.status(201).json({message:"Thank You For Asking Quection Our Team Try To Answering Your Quection As Soon As Posible. Please Cheack Your Quection Detailes In Your Profile."});
+        }catch(e){
+            console.log(e.message);
+        }
+    }
+
+    //===========Get All Quection=========
+    export const getquection = async (req,res)=>{
+        try{
+            const quections = await Question.find();
+            res.status(200).send(quections);
+        }catch(e){
+            console.log(e.message);
+        }
+    }
+
+    // ===========Answering Specific Quection==========
+    export const answerquection = async (req,res)=>{
+        
+        //=========== Get Quection Deatiles From User==========
+        const {user_name, user_email, question, answer, doctor_id} = req.body;
+
+        // ========Cheack filed is not empty=======
+        if(!user_name || !user_email || !question || !answer){
+            res.status(422).json({message: "Please Filed All Filleds Properly !"});
+        }
+
+        try{
+            await Question.findOneAndUpdate(
+                {
+                    _id: req.params.id
+                },
+                {
+                    $set: {answer, doctor_id}
+                }
+            );
+            res.status(201).json({message:"You Are Answering Quection Sussesully."});
+        }catch(e){
+            console.log(e.message);
+        }
+    }
+
+    // ========Delete Specific Quection========
+    export const removeQuection = async (req, res)=>{
+        try{
+            await Question.findOneAndDelete({_id: req.params.id});
+            res.status(201).json({message:"Quection Remove Sussesully."});
+        }catch(e){
+            console.log(e.message);
+        }
+    }
+
+    // ===========Get Specific User Quection=======
+    export const getSpecificUser = async (req, res)=>{
+        console.log(req.params.email);
+        try{
+            const quection = await Question.find({user_email: req.params.email});
+            quection.sort((b,a)=>{
+                return a.ask_date - b.ask_date;
+            });
+            res.status(200).send(quection);
+        }catch(e){
+            console.log(e.message);
+        }
+    }
+
+// ========X==Ending Quection API==X============
+
+// ========Starting Feedback Sending API=======
+
+    // ==========Gives Feedback=======
+    export const givesFeedback = async (req,res)=>{
+        // ======Get Feedback Information======
+        const { user_id, name, email, feedback, feedback_date, status } = req.body;
+
+        // =======Check Filed Empty Or Not======
+        if(!name || !email || !feedback){
+            res.status(422).json({message: "Please Filed All Filleds Properly !"});
+        }
+
+        try{
+            const feedbackuser = new Feedback( { user_id, name, email, feedback, feedback_date, status });
+            await feedbackuser.save();
+            res.status(201).json({message: "Thank You For Providing Your Valuabile Feedback."})
+        }catch(e){
+            console.log(e.message);
+        }
+    }
+
+    // ========Display Feedback========
+    export const getFeedback = async (req,res)=>{
+        try{
+            const feedback = await Feedback.find()
+            feedback.sort((b,a)=>{
+                return a.feedback_date - b.feedback_date;
+            });
+            res.status(200).send(feedback);
+        }catch(e){
+            console.log(e.message);
+        }
+    }
+
+    // ========Remove Feedback=======
+    export const removeFeedback = async (req,res)=>{
+        try{
+            await Feedback.findOneAndDelete({_id: req.params.id});
+            res.status(201).json({message:"Feedback Removed Sussesully."});
+        }catch(e){
+            console.log(e.message);
+        }
+    }
+
+// ======X==Ending Feedback Sending API==X=====
+
+// ========Staring Doctor Profile API=========
+
+
+
+// =====X===Ending Doctor Profile API===X======

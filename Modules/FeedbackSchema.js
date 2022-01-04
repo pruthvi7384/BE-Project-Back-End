@@ -3,7 +3,8 @@ import mongoose from 'mongoose';
 const FeedbackSchema = new mongoose.Schema({
     user_id:{
         type: String,
-        required: false
+        required: true,
+        default: 'NA'
     },
     name:{
         type: String,
@@ -21,5 +22,14 @@ const FeedbackSchema = new mongoose.Schema({
         type: Date,
         required: true,
         default: Date.now
+    },
+    status:{
+        type: Boolean,
+        required: true,
+        default: false
     }
 })
+
+const Feedback = mongoose.model('Feedback',FeedbackSchema);
+
+export default Feedback;
