@@ -1,0 +1,13 @@
+{    
+       "contact_no": 1234567890, 
+        "address":{
+                    "city":"Shahada" ,
+                    "area":"Near Bas Tastion",
+                    "pin_code":425444
+                },
+                "Education_Detailes":{
+                    "degree":"BE",
+                    "profection": "Computer Science",
+                    "degree_certificate":"https"
+                }
+   }

@@ -10,6 +10,9 @@ import Question from "../Modules/QuestionSchema.js";
 // ============Feedback Schema Here======
 import Feedback from "../Modules/FeedbackSchema.js";
 
+// ==========Doctor Schema Here======
+import Doctor from "../Modules/DoctorSchema.js";
+
 // ==========bcrypt for password matching========
 import bcrypt from 'bcryptjs';
 
@@ -43,7 +46,7 @@ export const Home = (req, res)=>{
             }else{
                 const user = new User({name,email,password,cpassword,crteatedAt,role});
                 await user.save();
-                res.status(201).json({message:"User Register Successfuly"});
+                res.status(201).json({message:"You Are Register Successfuly"});
             }
         }catch(err){
             console.log(err);
@@ -85,13 +88,18 @@ export const Home = (req, res)=>{
     // ========Delete Specific Account========
     export const removeAccount = async (req, res)=>{
         try{
-        await User.findOneAndDelete({_id: req.params.id});
-        res.status(201).json({message:"Account Removed Sussesully."});
+            await User.findOneAndDelete({_id: req.params.id});
+            const doctor = await Doctor.find({register_id: req.params.id});
+            if(doctor){
+                await Doctor.findOneAndDelete({register_id: req.params.id});
+                res.status(201).json({message:"Doctor Account Removed Sussesully."});
+            }else{
+                res.status(201).json({message:"User Account Removed Sussesully."});
+            }
         }catch(e){
             console.log(e.message);
         }
     }
-
 // ==========X==Ending Account API==X===========
 
 // =========Starting Comman Chat API Creation============
@@ -243,6 +251,25 @@ export const Home = (req, res)=>{
         }
     }
 
+    //========Update Feedbaack=======
+    export const updateFeedback = async (req,res)=>{
+        //=======Get Detailes From Feedback=======
+        const { status } = req.body;
+        try{
+            await Feedback.findOneAndUpdate(
+                {
+                    _id: req.params.id
+                },
+                {
+                    $set: {status}
+                }
+            );
+            res.status(201).json({message:"Feedback Status Change Sussesully."});
+        }catch(e){
+            console.log(e.message);
+        }
+    }
+
     // ========Remove Feedback=======
     export const removeFeedback = async (req,res)=>{
         try{
@@ -257,6 +284,97 @@ export const Home = (req, res)=>{
 
 // ========Staring Doctor Profile API=========
 
+    // ========Doctor Profile Post APT======
+    export const doctorpost = async (req,res)=>{
 
+        // =========Get Detailes From Doctor=========
+        const contact_no = req.body.contact_no;
+        const city = req.body.address.city;
+        const area = req.body.address.area;
+        const pin_code = req.body.address.pin_code;
+        const degree = req.body.Education_Detailes.degree;
+        const profection = req.body.Education_Detailes.profection;
+        const degree_certificate = req.body.Education_Detailes.degree_certificate;
+        const status = false;
+        const verify_date = 'na';
+        const replay = 'na'
 
+        // ============All Feiled Fill Or Not==========
+        if(!contact_no || !city || !area || !pin_code || !degree || !profection || !degree_certificate){
+            res.status(422).json({message: "Please Filed All Filleds Properly !"});
+        }
+      
+        try{
+            const doctor = new Doctor({
+                register_id:req.params.id,
+                contact_no: contact_no,
+                address:{
+                    city: city,
+                    area: area,
+                    pin_code: pin_code,
+                },
+                Education_Detailes:{
+                    degree: degree,
+                    profection: profection,
+                    degree_certificate: degree_certificate
+                },
+                verification_status:{
+                    status: status,
+                    verify_date: verify_date,
+                    replay: replay
+                }
+            });
+            await doctor.save();
+            res.status(201).json({message: "Thank You For Providing Your Detailes Our Team Verify Your Detailes Within 24 Hours."});
+        }catch(e){
+            console.log(e.message);
+        }
+    }
+
+    // ========Get Doctor Detailes=====
+    export const doctorGet = async (req, res)=>{
+        try{
+            const doctor = await Doctor.find();
+            res.status(200).send(doctor);
+        }catch(e){
+            console.log(e.message);
+        }
+    }
+
+    // ==========Get Specific Doctor Detailes====
+    export const doctorSpecific = async (req, res)=>{
+        try{
+            const doctor = await Doctor.find({register_id:req.params.id});
+            res.status(200).send(doctor);
+        }catch(e){
+            console.log(e.message);
+        }
+    }
+
+    // =========Update Status=========
+    export const doctorVerify = async (req, res)=>{
+        // ========Get Verifictaion Detailes=====
+        const status = req.body.status;
+        const verify_date = new Date.now();
+        const replay = req.body.replay
+        try{
+            await Feedback.findOneAndUpdate(
+                {
+                    register_id:req.params.id
+                },
+                {
+                    $set: {
+                        verification_status:{
+                            status: status,
+                            verify_date: verify_date,
+                            replay : replay
+                        }
+                    }
+                }
+            );
+            res.status(201).json({message:"Doctor Account Verification Sussesully."});
+        }catch(e){
+            console.log(e.message);
+        }
+    }
 // =====X===Ending Doctor Profile API===X======

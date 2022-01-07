@@ -38,14 +38,18 @@ const DoctorSchema = new mongoose.Schema({
         }
     },
     verification_status:{
+        replay:{
+            type: String,
+            required : true
+        },
         status:{
             type: Boolean,
             required: true,
             default:false
         },
         verify_date:{
-            type: Date,
-            required: true
+            type: String,
+            required: false,
         }
     }
 

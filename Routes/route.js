@@ -4,7 +4,7 @@ import express from 'express';
 import '../DB/connection.js';
 
 // ==========All Api Controllers===========
-import { ChatPost, ChatGet, Home, Login, Signup, QuectionPost, getquection, answerquection, removeQuection, getSpecificUser, removeAccount, givesFeedback, getFeedback, removeFeedback } from '../Controllers/controller.js';
+import { ChatPost, ChatGet, Home, Login, Signup, QuectionPost, getquection, answerquection, removeQuection, getSpecificUser, removeAccount, givesFeedback, getFeedback, removeFeedback, updateFeedback, doctorpost, doctorGet, doctorSpecific } from '../Controllers/controller.js';
 
 // =========Assign Express Router========
 const Router = express.Router();
@@ -20,7 +20,7 @@ Router.get('/', Home);
     // ============Login Route========
     Router.post('/login', Login);
 
-    // ========Delete User Account Route=====
+    // ========Delete Account Route=====
     Router.delete('/profile/:id', removeAccount);
 
 // ======X===Ending Account Router===X=====
@@ -59,6 +59,9 @@ Router.get('/', Home);
     // ========Gives Feedback=========
     Router.post('/feedback',givesFeedback);
 
+    // ========Update Feedback=========
+    Router.put('/feedback/:id',updateFeedback);
+
     // ========Display Feedback========
     Router.get('/feedback', getFeedback);
 
@@ -69,6 +72,17 @@ Router.get('/', Home);
 
 // ===========Starting Doctore Profile Router==========
 
+    // ==========Doctor Profile Add Router======
+    Router.post('/doctorprofile/:id', doctorpost);
+
+    // =======Get Doctor Detailes=====
+    Router.get('/doctors',doctorGet);
+
+    // ======Get Specific Doctor Detailes=====
+    Router.get('/doctor/:id',doctorSpecific);
+
+    // ======Update Doctor Verification Status========
+    Router.put('/doctor/:id', );
 
 
 // =======X===Ending Doctore Profile Router===X========
