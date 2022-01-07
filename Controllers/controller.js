@@ -85,6 +85,19 @@ export const Home = (req, res)=>{
         }
     }
 
+    // ========Get All User Detailes=========
+    export const getUser = async (req, res)=>{
+        try{
+            const user = await User.find()
+            user.sort((b,a)=>{
+                return a.crteatedAt - b.crteatedAt;
+            });
+            res.status(200).send(user);
+        }catch(e){
+            console.log(e.message);
+        }
+    }
+
     // ========Delete Specific Account========
     export const removeAccount = async (req, res)=>{
         try{
