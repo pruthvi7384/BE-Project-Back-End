@@ -397,7 +397,7 @@ export const Home = (req, res)=>{
         const verify_date = new Date.now();
         const replay = req.body.replay
         try{
-            await Feedback.findOneAndUpdate(
+            await Doctor.findOneAndUpdate(
                 {
                     register_id:req.params.id
                 },
@@ -469,6 +469,9 @@ export const Home = (req, res)=>{
     export const allDiseaseInfo = async (req,res)=>{
         try{
             const disease = await Disease.find();
+            disease.sort((b,a)=>{
+                return a.created_date - b.created_date;
+            });
             res.status(200).send(disease);
         }catch(e){
             console.log(e.message);
@@ -479,6 +482,9 @@ export const Home = (req, res)=>{
     export const diseaseSpecificDoctor = async (req, res)=>{
         try{
             const disease = await Disease.find({doctor_id:req.params.id});
+            disease.sort((b,a)=>{
+                return a.created_date - b.created_date;
+            });
             res.status(200).send(disease);
         }catch(e){
             console.log(e.message);
