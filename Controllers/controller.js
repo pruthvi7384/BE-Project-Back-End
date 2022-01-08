@@ -13,6 +13,9 @@ import Feedback from "../Modules/FeedbackSchema.js";
 // ==========Doctor Schema Here======
 import Doctor from "../Modules/DoctorSchema.js";
 
+//==========Disease Schema Here=====
+import Disease from "../Modules/DiseaseSchema.js";
+
 // ==========bcrypt for password matching========
 import bcrypt from 'bcryptjs';
 
@@ -88,11 +91,34 @@ export const Home = (req, res)=>{
     // ========Get All User Detailes=========
     export const getUser = async (req, res)=>{
         try{
-            const user = await User.find()
+            const user = await User.find({role : 'user'});
             user.sort((b,a)=>{
                 return a.crteatedAt - b.crteatedAt;
             });
             res.status(200).send(user);
+        }catch(e){
+            console.log(e.message);
+        }
+    }
+
+    // ========Get All User Detailes=========
+    export const getDoctor = async (req, res)=>{
+        try{
+            const doctor = await User.find({role : 'doctor'});
+            doctor.sort((b,a)=>{
+                return a.crteatedAt - b.crteatedAt;
+            });
+            res.status(200).send(doctor);
+        }catch(e){
+            console.log(e.message);
+        }
+    }
+
+    // ========Get All User Detailes=========
+    export const getProfileSpecific = async (req, res)=>{
+        try{
+            const doctor = await User.find({_id: req.params.id});
+            res.status(200).send(doctor);
         }catch(e){
             console.log(e.message);
         }
@@ -391,3 +417,83 @@ export const Home = (req, res)=>{
         }
     }
 // =====X===Ending Doctor Profile API===X======
+
+// ==========Starting Disease Information Router========
+
+    // ========Add Disease Information===========
+    export const addDisease = async (req, res)=>{
+        // ========Get Disease Detailes From Doctor====
+        const doctor_id = req.body.doctor_id;
+        const desease_name = req.body.desease_name;
+        const description = req.body.detail.description;
+
+        // ===========Cheak Detailes Not Empty=======
+        if(!desease_name || !description || !doctor_id){
+            res.status(422).json({message: "Please Filed All Filleds Properly !"});
+        }
+
+        // ==========Save Deisease Detailes==========
+        try{
+           const diseas = new Disease(req.body); 
+           await diseas.save();
+           res.status(201).json({message: "Thank You For Providing Disease Detailes Our Team Verify Your Add Disease Detailes Within 24 Hours."});
+        }catch(e){
+            console.log(e.message);
+        }
+    }
+
+    // =======Delete Specific Disease Information======
+    export const removeDiseaseInfo = async (req, res)=>{
+        try{
+            await Disease.findOneAndDelete({_id: req.params.id});
+            res.status(201).json({message:"Disease Information Remove Sussesully."});
+        }catch(e){
+            console.log(e.message);
+        }
+    }
+
+    // =========Disease Info Edit=========
+    export const diseaseInfoEdit = async (req,res)=>{
+        try{
+            await Disease.findOneAndUpdate(
+                {_id: req.params.id},
+                {$set: req.body}
+            );
+            res.status(201).json({message: "Disease Information Edited Sussesfuly."})
+        }catch(e){
+            console.log(e.message);
+        }
+    }
+
+    // ===========Get All Disease Info=========
+    export const allDiseaseInfo = async (req,res)=>{
+        try{
+            const disease = await Disease.find();
+            res.status(200).send(disease);
+        }catch(e){
+            console.log(e.message);
+        }
+    }
+
+    // ========Specific Disease Information=====
+    export const diseaseSpecificDoctor = async (req, res)=>{
+        try{
+            const disease = await Disease.find({doctor_id:req.params.id});
+            res.status(200).send(disease);
+        }catch(e){
+            console.log(e.message);
+        }
+    }
+
+    // ============Get Specific Disease Information=========
+    export const diseaseSpecific = async (req, res)=>{
+        try{
+            const disease = await Disease.find({_id:req.params.id});
+            res.status(200).send(disease);
+        }catch(e){
+            console.log(e.message);
+        }
+    }
+
+
+// ========X===Ending Disease Information Router===X====

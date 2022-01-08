@@ -11,3 +11,64 @@
                     "degree_certificate":"https"
                 }
    }
+{
+      "doctor_id": "hhg",
+        "desease_name":"hhg",
+        "detail":{
+            "image":"https",
+            "description": "hhh",
+            "symptoms": [
+               {
+                   "symptoms": "https"
+               }
+            ],
+            "precaution":[
+              "HTTP",
+              "http"
+            ],
+            "medicine":[
+               "HTTP",
+                "http"
+            ]
+    },
+        "most_predicated_area":{
+            "city":"NA",
+            "area": "NA",
+            "pin_code": 0
+    }
+}
+               
+
+{
+    "doctor_id": "hhg",
+      "desease_name":"hhg",
+      "detail":{
+          "image":"https",
+          "description": "hhh",
+          "symptoms": [
+             {
+                 "symptoms": "https"
+             }
+          ],
+          "precaution":[
+            "HTTP",
+            "http"
+          ],
+          "medicine":[
+             "HTTP",
+              "http"
+          ]
+  },
+      "most_predicated_area":{
+          "city":"NA",
+          "area": "NA",
+          "pin_code": 0
+  }
+}
+             
+{
+    "verification_status":{
+        "status": true,
+        "verify_date": "3005200"
+    }
+}

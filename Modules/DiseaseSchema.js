@@ -12,23 +12,21 @@ const DiseaseSchema = new mongoose.Schema({
     detail:{
         image:{
             type: String,
-            required: true
+            required: true,
+            default: 'https://www.hopkinsmedicine.org/-/media/images/health/1_-conditions/chidrens-health/blounts-disease-teaser.ashx'
         },
         description:{
             type: String,
             required: true
         },
         symptoms:{
-            type: [Array],
-            required: true
+            type: [],
         },
         precaution:{
-            type: [Array],
-            required: true
+            type: [],
         },
         medicine:{
-            type: [Array],
-            required: true
+            type: [],
         }
     },
     created_date:{
@@ -43,23 +41,32 @@ const DiseaseSchema = new mongoose.Schema({
             default:false
         },
         verify_date:{
-            type: Date,
-            required: true
+            type: String,
+            required: true,
+            default: 'NA'
         }
     },
     most_predicated_area:{
         city:{
             type: String,
-            required: true
+            required: true,
+            default: 'NA'
         },
         area:{
             type: String,
-            required: true
+            required: true,
+            default: 'NA'
         },
         pin_code:{
             type:Number,
-            required: true
+            required: true,
+            default: 0
         }
+    },
+    visibility:{
+        type: Boolean,
+        required: true,
+        default: false
     }
 })
 

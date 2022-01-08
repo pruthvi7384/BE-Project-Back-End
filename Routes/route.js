@@ -4,7 +4,7 @@ import express from 'express';
 import '../DB/connection.js';
 
 // ==========All Api Controllers===========
-import { ChatPost, ChatGet, Home, Login, Signup, QuectionPost, getquection, answerquection, removeQuection, getSpecificUser, removeAccount, givesFeedback, getFeedback, removeFeedback, updateFeedback, doctorpost, doctorGet, doctorSpecific, getUser, doctorVerify } from '../Controllers/controller.js';
+import { ChatPost, ChatGet, Home, Login, Signup, QuectionPost, getquection, answerquection, removeQuection, getSpecificUser, removeAccount, givesFeedback, getFeedback, removeFeedback, updateFeedback, doctorpost, doctorGet, doctorSpecific, getUser, doctorVerify, getDoctor, addDisease, removeDiseaseInfo, diseaseInfoEdit, allDiseaseInfo, diseaseSpecificDoctor, diseaseSpecific } from '../Controllers/controller.js';
 
 // =========Assign Express Router========
 const Router = express.Router();
@@ -23,8 +23,14 @@ Router.get('/', Home);
     // ========Get All User=====
     Router.get('/allusers', getUser);
 
+    // =======All Doctor=====
+    Router.get('/alldoctor',getDoctor);
+
     // ========Delete Account Route=====
     Router.delete('/profile/:id', removeAccount);
+
+    // ========Specific Account Route=====
+    Router.get('/profile/:id', getSpecificUser);
 
 // ======X===Ending Account Router===X=====
 
@@ -79,7 +85,7 @@ Router.get('/', Home);
     Router.post('/doctorprofile/:id', doctorpost);
 
     // =======Get Doctor Detailes=====
-    Router.get('/doctors',doctorGet);
+    Router.get('/doctors', doctorGet);
 
     // ======Get Specific Doctor Detailes=====
     Router.get('/doctor/:id',doctorSpecific);
@@ -87,7 +93,28 @@ Router.get('/', Home);
     // ======Update Doctor Verification Status========
     Router.put('/doctor/:id', doctorVerify);
 
-
 // =======X===Ending Doctore Profile Router===X========
+
+// ============Disease Information Router===========
+
+    // ========Add Disease Information==========
+    Router.post('/disease', addDisease);
+
+    // =======Remove Disease Information]=====
+    Router.delete('/disease/:id',removeDiseaseInfo);
+
+    // =========Specific Disease Info Edit========
+    Router.put('/disease/:id', diseaseInfoEdit);
+
+    // ========All Disease Info======
+    Router.get('/alldisease', allDiseaseInfo);
+
+    // =======Spcific Doctor Added Disease Information===
+    Router.get('/alldisease/:id', diseaseSpecificDoctor);
+
+    // =======Spcific Disease Information===
+    Router.get('/disease/:id', diseaseSpecific);
+
+// ========X==Disease Information Router==X=========
 
 export default Router;
