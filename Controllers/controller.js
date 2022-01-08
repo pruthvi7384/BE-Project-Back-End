@@ -309,6 +309,19 @@ export const Home = (req, res)=>{
         }
     }
 
+    // ========Display Admin Verify Feedback========
+    export const getVerifyFeedback = async (req,res)=>{
+        try{
+            const feedback = await Feedback.find({status: true})
+            feedback.sort((b,a)=>{
+                return a.feedback_date - b.feedback_date;
+            });
+            res.status(200).send(feedback);
+        }catch(e){
+            console.log(e.message);
+        }
+    }
+
     // ========Remove Feedback=======
     export const removeFeedback = async (req,res)=>{
         try{
