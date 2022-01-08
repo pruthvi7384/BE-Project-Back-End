@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import Pusher from 'pusher';
-import dotenv  from 'dotenv';
-dotenv.config({path: './config.env'});
+
 
 // =========Pusher Cradantial for realtime behaviour===========
 const pusher = new Pusher({
@@ -15,7 +14,7 @@ const pusher = new Pusher({
 
 //============== DB_CONECTION==============
 
-const connection_URL = process.env.DATABASE;
+const connection_URL = `mongodb+srv://admin:gqnfcAFEWrZbCjZI@cluster0.xtcpc.mongodb.net/Diseases?retryWrites=true&w=majority`;
 mongoose.connect(connection_URL, {
     useNewUrlParser: true,
     useNewUrlParser: true,
