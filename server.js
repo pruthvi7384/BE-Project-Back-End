@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(cors());
 
 // =======Runing Port Define Here========
-const port = process.env.PORT;
+const port = process.env.PORT || 8000;
 
 // =======All Route Call Here========
 app.use(Router);
