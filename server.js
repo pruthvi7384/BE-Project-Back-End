@@ -18,5 +18,5 @@ app.use(Router);
 
 // =======Server Listning Here========
 app.listen(port,()=>{
-    console.log(`listening on http:localhost:${port}`);
+    console.log(`listening on http://localhost:${port}`);
 });
