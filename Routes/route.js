@@ -4,7 +4,7 @@ import express from 'express';
 import '../DB/connection.js';
 
 // ==========All Api Controllers===========
-import { ChatPost, ChatGet, Home, Login, Signup, QuectionPost, getquection, answerquection, removeQuection, getSpecificUser, removeAccount, givesFeedback, getFeedback, removeFeedback, updateFeedback, doctorpost, doctorGet, doctorSpecific, getUser, doctorVerify, getDoctor, addDisease, removeDiseaseInfo, diseaseInfoEdit, allDiseaseInfo, diseaseSpecificDoctor, diseaseSpecific, getVerifyFeedback } from '../Controllers/controller.js';
+import { ChatPost, ChatGet, Home, Login, Signup, QuectionPost, getquection, answerquection, removeQuection, getSpecificUser, removeAccount, givesFeedback, getFeedback, removeFeedback, updateFeedback, doctorpost, doctorGet, doctorSpecific, getUser, doctorVerify, getDoctor, addDisease, removeDiseaseInfo, diseaseInfoEdit, allDiseaseInfo, diseaseSpecificDoctor, diseaseSpecific, getVerifyFeedback, verifyallDiseaseInfo } from '../Controllers/controller.js';
 
 // =========Assign Express Router========
 const Router = express.Router();
@@ -111,6 +111,9 @@ Router.get('/', Home);
 
     // ========All Disease Info======
     Router.get('/alldisease', allDiseaseInfo);
+
+    // ========All Verify Diseases Disease Info======
+    Router.get('/alldiseaseverify', verifyallDiseaseInfo);
 
     // =======Spcific Doctor Added Disease Information===
     Router.get('/alldisease/:id', diseaseSpecificDoctor);

@@ -341,6 +341,7 @@ export const Home = (req, res)=>{
 
         // =========Get Detailes From Doctor=========
         const contact_no = req.body.contact_no;
+        const about = req.body.about;
         const city = req.body.address.city;
         const area = req.body.address.area;
         const pin_code = req.body.address.pin_code;
@@ -360,6 +361,7 @@ export const Home = (req, res)=>{
             const doctor = new Doctor({
                 register_id:req.params.id,
                 contact_no: contact_no,
+                about : about,
                 address:{
                     city: city,
                     area: area,
@@ -406,9 +408,9 @@ export const Home = (req, res)=>{
     // =========Update Status=========
     export const doctorVerify = async (req, res)=>{
         // ========Get Verifictaion Detailes=====
-        const status = req.body.status;
-        const verify_date = new Date.now();
-        const replay = req.body.replay
+        const status = req.body.verification_status.status;
+        const verify_date = new Date();
+        const replay = req.body.verification_status.replay
         try{
             await Doctor.findOneAndUpdate(
                 {
@@ -484,6 +486,21 @@ export const Home = (req, res)=>{
             const disease = await Disease.find();
             disease.sort((b,a)=>{
                 return a.created_date - b.created_date;
+            });
+            res.status(200).send(disease);
+        }catch(e){
+            console.log(e.message);
+        }
+    }
+
+    // ===========Get Verifyed Information Disease===========
+    export const verifyallDiseaseInfo = async (req,res)=>{
+        try{
+            const disease = await Disease.find({
+                visibility: true
+            });
+            disease.sort((b,a)=>{
+                return a.verify_date - b.verify_date;
             });
             res.status(200).send(disease);
         }catch(e){

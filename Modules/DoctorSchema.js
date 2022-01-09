@@ -9,6 +9,9 @@ const DoctorSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    about:{
+        type: String
+    },
     address:{
         city:{
             type: String,

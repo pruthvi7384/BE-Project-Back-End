@@ -27,6 +27,9 @@ const DiseaseSchema = new mongoose.Schema({
         },
         medicine:{
             type: [],
+        },
+        vaccine:{
+            type: [],
         }
     },
     created_date:{
@@ -41,6 +44,11 @@ const DiseaseSchema = new mongoose.Schema({
             default:false
         },
         verify_date:{
+            type: String,
+            required: true,
+            default: 'NA'
+        },
+        replay:{
             type: String,
             required: true,
             default: 'NA'
