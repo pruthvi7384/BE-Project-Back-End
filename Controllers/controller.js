@@ -49,7 +49,7 @@ export const Home = (req, res)=>{
             }else{
                 const user = new User({name,email,password,cpassword,crteatedAt,role});
                 await user.save();
-                res.status(201).json({message:"You Are Register Successfuly"});
+                res.status(201).json({message:"You Are Register Successfuly, Thank You For Choosing E Health Care Please Login Now !"});
             }
         }catch(err){
             console.log(err);
@@ -76,12 +76,12 @@ export const Home = (req, res)=>{
                 const isMatch = await bcrypt.compare(password, login.password);
                 // =============Cheack Password Here=============
                 if(isMatch){
-                    res.status(200).json({message: "Login Successfuly",login:login});
+                    res.status(200).json({message: "Your Login Successfuly, Thank You For Choosing E Health Care !",login:login});
                 }else{
                     res.status(422).json({message: "Your Login Cradntial is wrong Please Check and try again later!"});
                 }
             }else{
-                res.status(422).json({message: "User Not Register Please First Register!"});
+                res.status(422).json({message: "Your Not Register Please First Register !"});
             }
         }catch(e){
             console.log(e.message);
