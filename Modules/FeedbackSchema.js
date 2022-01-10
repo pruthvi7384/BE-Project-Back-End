@@ -6,6 +6,11 @@ const FeedbackSchema = new mongoose.Schema({
         required: true,
         default: 'NA'
     },
+    disease_id:{
+        type: String,
+        required: true,
+        default: 'NA'
+    },
     name:{
         type: String,
         required: true

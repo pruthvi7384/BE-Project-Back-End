@@ -261,7 +261,7 @@ export const Home = (req, res)=>{
     // ==========Gives Feedback=======
     export const givesFeedback = async (req,res)=>{
         // ======Get Feedback Information======
-        const { user_id, name, email, feedback, feedback_date, status } = req.body;
+        const { user_id, disease_id, name, email, feedback, feedback_date, status } = req.body;
 
         // =======Check Filed Empty Or Not======
         if(!name || !email || !feedback){
@@ -269,7 +269,7 @@ export const Home = (req, res)=>{
         }
 
         try{
-            const feedbackuser = new Feedback( { user_id, name, email, feedback, feedback_date, status });
+            const feedbackuser = new Feedback( { user_id, disease_id, name, email, feedback, feedback_date, status });
             await feedbackuser.save();
             res.status(201).json({message: "Thank You For Providing Your Valuabile Feedback."})
         }catch(e){
