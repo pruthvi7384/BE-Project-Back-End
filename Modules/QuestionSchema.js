@@ -26,14 +26,13 @@ const QuestionSchema = new mongoose.Schema({
     answer:{
         type: String,
         required: true,
+        default: 'NA'
     },
     answer_date:{
         type: Date,
-        required: true,
     },
     doctor_id:{
         type:String,
-        required: true,
     }
 })
 
