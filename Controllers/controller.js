@@ -186,7 +186,7 @@ export const Home = (req, res)=>{
 
         // =========Send Data=========
         try{
-            const quection = new Question({user_id,user_name, user_email, question, ask_date, answer, doctor_id});
+            const quection = new Question({user_id, disease_id, user_name, user_email, question, ask_date, answer, doctor_id});
             await quection.save();
             res.status(201).json({message:"Thank You For Asking Quection Our Team Try To Answering Your Quection As Soon As Posible. Please Cheack Your Quection Detailes In Your Profile."});
         }catch(e){

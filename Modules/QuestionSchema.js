@@ -6,6 +6,11 @@ const QuestionSchema = new mongoose.Schema({
         required: true,
         default: 'NA'
     },
+    disease_id:{
+        type: String,
+        required: true,
+        default: 'NA'
+    },
     user_name:{
         type: String,
         required: true
