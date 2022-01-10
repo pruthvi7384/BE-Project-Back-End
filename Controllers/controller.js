@@ -36,16 +36,16 @@ export const Home = (req, res)=>{
 
         // ========Cheack filed is not empty=======
         if(!name || !email || !password || !cpassword || !role){
-            res.status(422).json({message: "Please Filed All Filleds Properly !"});
+            res.status(201).json({message: "Please Filed All Filleds Properly !"});
         }
 
         // =========Send Data=========
         try{
             const userExist = await User.findOne({ email: email });
             if(userExist) {
-                res.status(422).json({message: "Email Id Alrady Exists !"});
+                res.status(201).json({message: "Email Id Alrady Exists !"});
             }else if(password != cpassword){
-                res.status(422).json({message: "Password Is Not Matching !"});
+                res.status(201).json({message: "Password Is Not Matching !"});
             }else{
                 const user = new User({name,email,password,cpassword,crteatedAt,role});
                 await user.save();
@@ -64,7 +64,7 @@ export const Home = (req, res)=>{
 
             // ========Cheack filed is not empty=======
             if(!email || !password){
-                res.status(422).json({message: "Please Enter Both Fieleds Properly !"});
+                res.status(201).json({message: "Please Enter Both Fieleds Properly !"});
             }
 
             // ==========Match Email id exist or not===========
@@ -78,10 +78,10 @@ export const Home = (req, res)=>{
                 if(isMatch){
                     res.status(200).json({message: "Your Login Successfuly, Thank You For Choosing E Health Care !",login:login});
                 }else{
-                    res.status(422).json({message: "Your Login Cradntial is wrong Please Check and try again later!"});
+                    res.status(201).json({message: "Your Login Cradntial is wrong Please Check and try again later!"});
                 }
             }else{
-                res.status(422).json({message: "Your Not Register Please First Register !"});
+                res.status(201).json({message: "Your Not Register Please First Register !"});
             }
         }catch(e){
             console.log(e.message);
