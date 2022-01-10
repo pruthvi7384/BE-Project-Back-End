@@ -256,9 +256,9 @@ export const Home = (req, res)=>{
 
 // ========X==Ending Quection API==X============
 
-// ========Starting Feedback Sending API=======
+// ========Starting Feedback Sending API========
 
-    // ==========Gives Feedback=======
+    // ==========Gives Feedback========
     export const givesFeedback = async (req,res)=>{
         // ======Get Feedback Information======
         const { user_id, disease_id, name, email, feedback, feedback_date, status } = req.body;
@@ -312,7 +312,23 @@ export const Home = (req, res)=>{
     // ========Display Admin Verify Feedback========
     export const getVerifyFeedback = async (req,res)=>{
         try{
-            const feedback = await Feedback.find({status: true})
+            const feedback = await Feedback.find({visibility: true})
+            feedback.sort((b,a)=>{
+                return a.feedback_date - b.feedback_date;
+            });
+            res.status(200).send(feedback);
+        }catch(e){
+            console.log(e.message);
+        }
+    }
+
+    // ========Display Admin Verify Disease Feedback========
+    export const getVerifyFeedbackDiseases = async (req,res)=>{
+        try{
+            const feedback = await Feedback.find({
+                disease_id: req.params.id,
+                status: true
+            })
             feedback.sort((b,a)=>{
                 return a.feedback_date - b.feedback_date;
             });
