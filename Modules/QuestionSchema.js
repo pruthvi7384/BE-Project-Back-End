@@ -25,12 +25,15 @@ const QuestionSchema = new mongoose.Schema({
     },
     answer:{
         type: String,
+        required: true,
     },
     answer_date:{
         type: Date,
+        required: true,
     },
     doctor_id:{
         type:String,
+        required: true,
     }
 })
 
