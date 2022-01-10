@@ -24,19 +24,13 @@ const QuestionSchema = new mongoose.Schema({
         default: Date.now
     },
     answer:{
-        type: Date,
-        required: true,
-        default: Date.now
+        type: String,
     },
     answer_date:{
-        type: String,
-        required: true,
-        default: 'NA'
+        type: Date,
     },
     doctor_id:{
         type:String,
-        required: true,
-        default:'NA'
     }
 })
 

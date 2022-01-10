@@ -208,7 +208,7 @@ export const Home = (req, res)=>{
     export const answerquection = async (req,res)=>{
         
         //=========== Get Quection Deatiles From User==========
-        const {user_name, user_email, question, answer, doctor_id} = req.body;
+        const {user_name, user_email, question, answer, doctor_id, answer_date} = req.body;
 
         // ========Cheack filed is not empty=======
         if(!user_name || !user_email || !question || !answer){
@@ -221,7 +221,7 @@ export const Home = (req, res)=>{
                     _id: req.params.id
                 },
                 {
-                    $set: {answer, doctor_id}
+                    $set: {answer, doctor_id, answer_date}
                 }
             );
             res.status(201).json({message:"You Are Answering Quection Sussesully."});
