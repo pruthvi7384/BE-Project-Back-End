@@ -177,7 +177,7 @@ export const Home = (req, res)=>{
     export const QuectionPost = async(req, res)=>{
 
         //=========== Get Quection Deatiles From User==========
-        const {user_id,user_name, user_email, question, ask_date, answer, doctor_id} = req.body;
+        const {user_id, disease_id, user_name, user_email, question, ask_date, answer, doctor_id} = req.body;
 
         // ========Cheack filed is not empty=======
         if(!user_name || !user_email || !question){
