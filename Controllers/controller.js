@@ -332,6 +332,20 @@ export const Home = (req, res)=>{
         }
     }
 
+     // ===========Get Specific User Feedbacks=======
+     export const getSpecificUserFeedback = async (req, res)=>{
+        console.log(req.params.email);
+        try{
+            const feedback = await Feedback.find({email: req.params.email});
+            feedback.sort((b,a)=>{
+                return a.feedback_date - b.feedback_date;
+            });
+            res.status(200).send(feedback);
+        }catch(e){
+            console.log(e.message);
+        }
+    }
+
 // ======X==Ending Feedback Sending API==X=====
 
 // ========Staring Doctor Profile API=========
