@@ -616,7 +616,7 @@ export const Home = (req, res)=>{
     // ============Get Specific Disease Information=========
     export const diseaseSpecific = async (req, res)=>{
         try{
-            const disease = await Disease.findOnce({_id:req.params.id});
+            const disease = await Disease.findOne({_id:req.params.id});
             res.status(200).send(disease);
         }catch(e){
             console.log(e.message);
