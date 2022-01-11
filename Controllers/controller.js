@@ -21,6 +21,7 @@ import bcrypt from 'bcryptjs';
 
 // ============import pusher==========
 import Pusher from 'pusher';
+import Contact from "../Modules/ContactSchema.js";
 
 // ===========Home Get===========
 export const Home = (req, res)=>{
@@ -117,8 +118,39 @@ export const Home = (req, res)=>{
     // ========Get All User Detailes=========
     export const getProfileSpecific = async (req, res)=>{
         try{
-            const doctor = await User.find({_id: req.params.id});
+            const doctor = await User.findOne({_id: req.params.id});
             res.status(200).send(doctor);
+        }catch(e){
+            console.log(e.message);
+        }
+    }
+
+    // ========Edit Specific User Account=====
+    export const editAccount = async (req,res)=>{
+        // ========Get All filed from user=======
+        const { name, email, password, cpassword } = req.body;
+
+        // ========Cheack filed is not empty=======
+        if(!name || !email || !password || !cpassword){
+            res.status(201).json({message: "Please Filed All Filleds Properly !"});
+        }
+
+        // =========Password Cheacking===========
+        if(password != cpassword){
+            res.status(201).json({message: "Password Is Not Matching !"})
+        }
+
+        // =============Updating==========
+        try{
+            await User.findOneAndUpdate(
+                {
+                    _id: req.params.id
+                },
+                {
+                    $set: req.body
+                }
+            );
+            res.status(201).json({message:"Your Account Detailes Updated Sussesully !"});
         }catch(e){
             console.log(e.message);
         }
@@ -128,7 +160,7 @@ export const Home = (req, res)=>{
     export const removeAccount = async (req, res)=>{
         try{
             await User.findOneAndDelete({_id: req.params.id});
-            const doctor = await Doctor.find({register_id: req.params.id});
+            const doctor = await Doctor.findOne({register_id: req.params.id});
             if(doctor){
                 await Doctor.findOneAndDelete({register_id: req.params.id});
                 res.status(201).json({message:"Doctor Account Removed Sussesully."});
@@ -181,7 +213,7 @@ export const Home = (req, res)=>{
 
         // ========Cheack filed is not empty=======
         if(!user_name || !user_email || !question){
-            res.status(422).json({message: "Please Filed All Filleds Properly !"});
+            res.status(201).json({message: "Please Filed All Filleds Properly !"});
         }
 
         // =========Send Data=========
@@ -212,7 +244,7 @@ export const Home = (req, res)=>{
 
         // ========Cheack filed is not empty=======
         if(!user_name || !user_email || !question || !answer){
-            res.status(422).json({message: "Please Filed All Filleds Properly !"});
+            res.status(201).json({message: "Please Filed All Filleds Properly !"});
         }
 
         try{
@@ -265,7 +297,7 @@ export const Home = (req, res)=>{
 
         // =======Check Filed Empty Or Not======
         if(!name || !email || !feedback){
-            res.status(422).json({message: "Please Filed All Filleds Properly !"});
+            res.status(201).json({message: "Please Filed All Filleds Properly !"});
         }
 
         try{
@@ -384,7 +416,7 @@ export const Home = (req, res)=>{
 
         // ============All Feiled Fill Or Not==========
         if(!contact_no || !city || !area || !pin_code || !degree || !profection || !degree_certificate){
-            res.status(422).json({message: "Please Filed All Filleds Properly !"});
+            res.status(201).json({message: "Please Filed All Filleds Properly !"});
         }
       
         try{
@@ -428,7 +460,7 @@ export const Home = (req, res)=>{
     // ==========Get Specific Doctor Detailes====
     export const doctorSpecific = async (req, res)=>{
         try{
-            const doctor = await Doctor.find({register_id:req.params.id});
+            const doctor = await Doctor.findOne({register_id:req.params.id});
             res.status(200).send(doctor);
         }catch(e){
             console.log(e.message);
@@ -461,6 +493,36 @@ export const Home = (req, res)=>{
             console.log(e.message);
         }
     }
+
+    // ==========Edit Doctore Profile========
+    export const doctorAccountEdit = async (req, res)=>{
+         // =========Get Detailes From Doctor=========
+         const contact_no = req.body.contact_no;
+         const about = req.body.about;
+         const city = req.body.address.city;
+         const area = req.body.address.area;
+         const pin_code = req.body.address.pin_code;
+         const degree = req.body.Education_Detailes.degree;
+         const profection = req.body.Education_Detailes.profection;
+         const degree_certificate = req.body.Education_Detailes.degree_certificate;
+        // ============All Feiled Fill Or Not==========
+        if(!contact_no || !city || !area || !pin_code || !degree || !profection || !degree_certificate){
+            res.status(201).json({message: "Please Filed All Filleds Properly !"});
+        }
+        try{
+            await Doctor.findOneAndUpdate(
+                {
+                    register_id:req.params.id
+                },
+                {
+                    $set: req.body
+                }
+            );
+            res.status(201).json({message:"Account Detailes Updated Sussesully."});
+        }catch(e){
+            console.log(e.message);
+        }
+    }
 // =====X===Ending Doctor Profile API===X======
 
 // ==========Starting Disease Information Router========
@@ -474,7 +536,7 @@ export const Home = (req, res)=>{
 
         // ===========Cheak Detailes Not Empty=======
         if(!desease_name || !description || !doctor_id){
-            res.status(422).json({message: "Please Filed All Filleds Properly !"});
+            res.status(201).json({message: "Please Filed All Filleds Properly !"});
         }
 
         // ==========Save Deisease Detailes==========
@@ -554,12 +616,80 @@ export const Home = (req, res)=>{
     // ============Get Specific Disease Information=========
     export const diseaseSpecific = async (req, res)=>{
         try{
-            const disease = await Disease.find({_id:req.params.id});
+            const disease = await Disease.findOnce({_id:req.params.id});
             res.status(200).send(disease);
         }catch(e){
             console.log(e.message);
         }
     }
-
-
 // ========X===Ending Disease Information Router===X====
+
+// =============Starting Contact From API Router==========
+
+    export const postContact = async (req,res)=>{
+        // =======Get Detailes From User======
+        const {user_id, name, email, subject, message} = req.body;
+
+        // ======Cheacking Filed Is Or Not=======
+        if(!name || !email || !subject || !message){
+            res.status(201).json({message: "Please Filed All Filleds Properly !"});
+        }
+
+        // ==========Send Detailes=======
+        try{
+            const contact = new Contact({user_id, name, email, subject, message}); 
+            await contact.save();
+            res.status(201).json({message: "Thank You ! Our Team Contact To You Within 24 Hours, Please Cheack Contact Detailes In Your Profile Section."});
+         }catch(e){
+             console.log(e.message);
+         }
+    }
+
+    // ========Get All Contact========
+    export const getContactAll = async (req,res)=>{
+        try{
+            const contact = await Contact.find();
+            contact.sort((b,a)=>{
+                return a.contact_date - b.contact_date;
+            });
+            res.status(200).send(contact);
+        }catch(e){
+            console.log(e.message);
+        }
+    }
+
+    // =========Admin Contact Back=======
+    export const adminContactBack = async (req,res)=>{
+        // =======Get Detailes From User======
+         const {name, email, subject, message} = req.body;
+
+        // ======Cheacking Filed Is Or Not=======
+         if(!name || !email || !subject || !message){
+             res.status(201).json({message: "Please Filed All Filleds Properly !"});
+         }
+
+        //==========Update Contact Detailes=========
+        try{
+            await Contact.findOneAndUpdate(
+                {email: req.params.email},
+                {$set: req.body}
+            );
+            res.status(201).json({message: "Contact Detailes Updated Sussesfuly."})
+        }catch(e){
+            console.log(e.message);
+        }
+    }
+
+    // ========Get Specific Contact========
+    export const getSpecificContact = async (req,res)=>{
+        try{
+            const contact = await Contact.find({email: req.params.email});
+            contact.sort((b,a)=>{
+                return a.contact_date - b.contact_date;
+            });
+            res.status(200).send(contact);
+        }catch(e){
+            console.log(e.message);
+        }
+    }
+// ==========X===Ending Contact From API Router===X=======

@@ -4,7 +4,7 @@ import express from 'express';
 import '../DB/connection.js';
 
 // ==========All Api Controllers===========
-import { ChatPost, ChatGet, Home, Login, Signup, QuectionPost, getquection, answerquection, removeQuection, getSpecificUser, removeAccount, givesFeedback, getFeedback, removeFeedback, updateFeedback, doctorpost, doctorGet, doctorSpecific, getUser, doctorVerify, getDoctor, addDisease, removeDiseaseInfo, diseaseInfoEdit, allDiseaseInfo, diseaseSpecificDoctor, diseaseSpecific, getVerifyFeedback, verifyallDiseaseInfo, getProfileSpecific, getSpecificUserFeedback, getVerifyFeedbackDiseases } from '../Controllers/controller.js';
+import { ChatPost, ChatGet, Home, Login, Signup, QuectionPost, getquection, answerquection, removeQuection, getSpecificUser, removeAccount, givesFeedback, getFeedback, removeFeedback, updateFeedback, doctorpost, doctorGet, doctorSpecific, getUser, doctorVerify, getDoctor, addDisease, removeDiseaseInfo, diseaseInfoEdit, allDiseaseInfo, diseaseSpecificDoctor, diseaseSpecific, getVerifyFeedback, verifyallDiseaseInfo, getProfileSpecific, getSpecificUserFeedback, getVerifyFeedbackDiseases, editAccount, doctorAccountEdit, postContact, getContactAll, adminContactBack, getSpecificContact } from '../Controllers/controller.js';
 
 // =========Assign Express Router========
 const Router = express.Router();
@@ -31,6 +31,9 @@ Router.get('/', Home);
 
     // ========Specific Account Route=====
     Router.get('/profile/:id', getProfileSpecific);
+
+    // ======Edit Specific User Profile======
+    Router.put('/profile/:id',editAccount);
 
 // ======X===Ending Account Router===X=====
 
@@ -99,12 +102,15 @@ Router.get('/', Home);
     // ======Get Specific Doctor Detailes=====
     Router.get('/doctor/:id',doctorSpecific);
 
-    // ======Update Doctor Verification Status========
+    // ======Update Doctor Verification Status=====
     Router.put('/doctor/:id', doctorVerify);
+
+    // ======Update Doctor Account Status========
+    Router.put('/doctorprofile/:id', doctorAccountEdit);
 
 // =======X===Ending Doctore Profile Router===X========
 
-// ============Disease Information Router===========
+// ============Starting Disease Information Router===========
 
     // ========Add Disease Information==========
     Router.post('/disease', addDisease);
@@ -127,6 +133,21 @@ Router.get('/', Home);
     // =======Spcific Disease Information===
     Router.get('/disease/:id', diseaseSpecific);
 
-// ========X==Disease Information Router==X=========
+// ========X==Ending Disease Information Router==X=========
+
+// ============Starting Contact From Router============
+
+    // ========Send Contact========
+    Router.post('/contact',postContact);
+
+    // ========Send Contact========
+    Router.get('/contact',getContactAll);
+
+    // ========Update Contact========
+    Router.put('/contact/:email',adminContactBack);
+
+    // ========Get Specific Contact Detailes========
+    Router.get('/contact/:email',getSpecificContact);
+// ==========X==Starting Contact From Router==X==========
 
 export default Router;
