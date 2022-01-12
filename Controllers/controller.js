@@ -128,10 +128,10 @@ export const Home = (req, res)=>{
     // ========Edit Specific User Account=====
     export const editAccount = async (req,res)=>{
         // ========Get All filed from user=======
-        const { name, email, password, cpassword } = req.body;
+        const { name, email } = req.body;
 
         // ========Cheack filed is not empty=======
-        if(!name || !email || !password || !cpassword){
+        if(!name || !email ){
             res.status(201).json({message: "Please Filed All Filleds Properly !"});
         }
 
