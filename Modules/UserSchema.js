@@ -23,6 +23,23 @@ const userSchema = new mongoose.Schema({
         type: Date, 
         default: Date.now
     },
+    address:{
+        city:{
+            type: String,
+            required: true,
+            default: 'NA'
+        },
+        area:{
+            type: String,
+            required: true,
+            default: 'NA'
+        },
+        pin_code:{
+            type:Number,
+            required: true,
+            default: 000
+        }
+    },
     role:{
         type: String,
         required: true,
