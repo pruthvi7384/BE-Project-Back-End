@@ -135,11 +135,6 @@ export const Home = (req, res)=>{
             res.status(201).json({message: "Please Filed All Filleds Properly !"});
         }
 
-        // =========Password Cheacking===========
-        if(password != cpassword){
-            res.status(201).json({message: "Password Is Not Matching !"})
-        }
-
         // =============Updating==========
         try{
             await User.findOneAndUpdate(
