@@ -35,9 +35,9 @@ const userSchema = new mongoose.Schema({
             default: 'NA'
         },
         pin_code:{
-            type:Number,
+            type:String,
             required: true,
-            default: 000
+            default: 'NA'
         }
     },
     role:{
