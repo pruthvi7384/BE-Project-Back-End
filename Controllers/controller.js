@@ -145,7 +145,7 @@ export const Home = (req, res)=>{
                     $set: req.body
                 }
             );
-            res.status(201).json({message:"Your Account Detailes Updated Sussesully !"});
+            res.status(201).json({message:"Your Account Detailes Updated Sussesully ! Please Try To Logout And Re Login."});
         }catch(e){
             console.log(e.message);
         }
