@@ -576,7 +576,10 @@ export const Home = (req, res)=>{
     export const verifyallDiseaseInfo = async (req,res)=>{
         try{
             const disease = await Disease.find({
-                visibility: true
+                visibility: true,
+                verification_status:{
+                    status: true
+                }
             });
             disease.sort((b,a)=>{
                 return a.verify_date - b.verify_date;

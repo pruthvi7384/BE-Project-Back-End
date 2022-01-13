@@ -16,11 +16,6 @@
     {    
         "contact_no": 1234567890, 
         "about": "An experienced clinician, he has keen interest in treating infection, diabetes, hypertension, angina, stroke, epilepsy, growth and metabolic disorders.",
-        "address":{
-            "city":"Pune" ,
-            "area":"Pune, Maharashtra",
-            "pin_code":425444
-        },
         "Education_Detailes":{
             "degree":"MBBS, MD (General Medicine)",
             "profection": "Computer Science",
@@ -74,12 +69,12 @@
               "The World Health Organization has recommended a malaria vaccine for use in children who live in countries with high numbers of malaria cases.",
               "Researchers are continuing to develop and study malaria vaccines to prevent infection."
             ]
-    },
-        "most_predicated_area":{
-            "city":"Shahada, Nandurbar, Maharastra",
-            "area": "Patel Rasidansy",
-            "pin_code": 425444
-    }
+        },
+            "most_predicated_area":{
+                "city":"Shahada, Nandurbar, Maharastra",
+                "area": "Patel Rasidansy",
+                "pin_code": 425444
+        }
     },
     
     
