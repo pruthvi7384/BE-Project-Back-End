@@ -61,7 +61,7 @@ export const Home = (req, res)=>{
     export const Login = async (req, res)=>{
         try{    
         // ========email and password from user=======
-            const { email, password, } = req.body;
+            const { email, password, role } = req.body;
 
             // ========Cheack filed is not empty=======
             if(!email || !password){
@@ -69,7 +69,10 @@ export const Home = (req, res)=>{
             }
 
             // ==========Match Email id exist or not===========
-            const login = await User.findOne({email: email});
+            const login = await User.findOne({
+                email: email,
+                role: role
+            });
 
             // ===========Email Id Exist Then Cheack Password=========
             if(login){
