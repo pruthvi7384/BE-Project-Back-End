@@ -12,20 +12,6 @@ const DoctorSchema = new mongoose.Schema({
     about:{
         type: String
     },
-    address:{
-        city:{
-            type: String,
-            required: true
-        },
-        area:{
-            type: String,
-            required: true
-        },
-        pin_code:{
-            type:Number,
-            required: true
-        }
-    },
     Education_Detailes:{
         degree:{
             type: String,

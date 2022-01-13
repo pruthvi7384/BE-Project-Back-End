@@ -402,9 +402,6 @@ export const Home = (req, res)=>{
         // =========Get Detailes From Doctor=========
         const contact_no = req.body.contact_no;
         const about = req.body.about;
-        const city = req.body.address.city;
-        const area = req.body.address.area;
-        const pin_code = req.body.address.pin_code;
         const degree = req.body.Education_Detailes.degree;
         const profection = req.body.Education_Detailes.profection;
         const degree_certificate = req.body.Education_Detailes.degree_certificate;
@@ -413,7 +410,7 @@ export const Home = (req, res)=>{
         const replay = 'na'
 
         // ============All Feiled Fill Or Not==========
-        if(!contact_no || !city || !area || !pin_code || !degree || !profection || !degree_certificate){
+        if(!contact_no || !degree || !profection || !degree_certificate){
             res.status(201).json({message: "Please Filed All Filleds Properly !"});
         }
       
@@ -422,11 +419,6 @@ export const Home = (req, res)=>{
                 register_id:req.params.id,
                 contact_no: contact_no,
                 about : about,
-                address:{
-                    city: city,
-                    area: area,
-                    pin_code: pin_code,
-                },
                 Education_Detailes:{
                     degree: degree,
                     profection: profection,
@@ -497,14 +489,11 @@ export const Home = (req, res)=>{
          // =========Get Detailes From Doctor=========
          const contact_no = req.body.contact_no;
          const about = req.body.about;
-         const city = req.body.address.city;
-         const area = req.body.address.area;
-         const pin_code = req.body.address.pin_code;
          const degree = req.body.Education_Detailes.degree;
          const profection = req.body.Education_Detailes.profection;
          const degree_certificate = req.body.Education_Detailes.degree_certificate;
         // ============All Feiled Fill Or Not==========
-        if(!contact_no || !city || !area || !pin_code || !degree || !profection || !degree_certificate){
+        if(!contact_no || !about || !degree || !profection || !degree_certificate){
             res.status(201).json({message: "Please Filed All Filleds Properly !"});
         }
         try{
