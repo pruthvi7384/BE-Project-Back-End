@@ -176,9 +176,9 @@ export const Home = (req, res)=>{
     // ===========Chat Post==========
     export const ChatPost = async(req, res)=>{
         // ========get message from user=======
-        const { name, message, timestamp} = req.body;
+        const {  user_id, name, message, timestamp} = req.body;
         try{
-            const chat = new Chat({ name, message, timestamp});
+            const chat = new Chat({  user_id, name, message, timestamp});
             await chat.save();
             res.status(201).json({message:"Message Succesfuly Send"});
         }catch(e){
