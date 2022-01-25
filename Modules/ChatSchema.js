@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 const chatSchema = new mongoose.Schema({
     user_id:{
         type: String,
+        required: true
     },
     name:{
         type: String,
