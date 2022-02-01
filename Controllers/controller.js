@@ -648,11 +648,11 @@ export const Home = (req, res)=>{
     // =========Admin Contact Back=======
     export const adminContactBack = async (req,res)=>{
         // =======Get Detailes From User======
-         const {name, email, subject, message, answer} = req.body;
+         const {answer} = req.body;
 
         // ======Cheacking Filed Is Or Not=======
-         if(!name || !email || !subject || !message || !answer){
-             res.status(201).json({message: "Please Filed All Filleds Properly !"});
+         if(!answer){
+             res.status(201).json({message: "Please Enter Replay !"});
          }
 
         //==========Update Contact Detailes=========
