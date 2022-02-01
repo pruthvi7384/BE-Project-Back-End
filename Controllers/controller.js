@@ -688,4 +688,13 @@ export const Home = (req, res)=>{
             console.log(e.message);
         }
     }
+    // ========Get Specific Contact Id========
+    export const getSpecificContactId = async (req,res)=>{
+        try{
+            const contact = await Contact.findOne({_id: req.params.id});
+            res.status(200).send(contact);
+        }catch(e){
+            console.log(e.message);
+        }
+    }
 // ==========X===Ending Contact From API Router===X=======
