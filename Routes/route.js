@@ -4,7 +4,7 @@ import express from 'express';
 import '../DB/connection.js';
 
 // ==========All Api Controllers===========
-import { ChatPost, ChatGet, Home, Login, Signup, QuectionPost, getquection, answerquection, removeQuection, getSpecificUser, removeAccount, givesFeedback, getFeedback, removeFeedback, updateFeedback, doctorpost, doctorGet, doctorSpecific, getUser, doctorVerify, getDoctor, addDisease, removeDiseaseInfo, diseaseInfoEdit, allDiseaseInfo, diseaseSpecificDoctor, diseaseSpecific, getVerifyFeedback, verifyallDiseaseInfo, getProfileSpecific, getSpecificUserFeedback, getVerifyFeedbackDiseases, editAccount, doctorAccountEdit, postContact, getContactAll, adminContactBack, getSpecificContact } from '../Controllers/controller.js';
+import { ChatPost, ChatGet, Home, Login, Signup, QuectionPost, getquection, answerquection, removeQuection, getSpecificUser, removeAccount, givesFeedback, getFeedback, removeFeedback, updateFeedback, doctorpost, doctorGet, doctorSpecific, getUser, doctorVerify, getDoctor, addDisease, removeDiseaseInfo, diseaseInfoEdit, allDiseaseInfo, diseaseSpecificDoctor, diseaseSpecific, getVerifyFeedback, verifyallDiseaseInfo, getProfileSpecific, getSpecificUserFeedback, getVerifyFeedbackDiseases, editAccount, doctorAccountEdit, postContact, getContactAll, adminContactBack, getSpecificContact, removeContact } from '../Controllers/controller.js';
 
 // =========Assign Express Router========
 const Router = express.Router();
@@ -148,6 +148,9 @@ Router.get('/', Home);
 
     // ========Get Specific Contact Detailes========
     Router.get('/contact/:email',getSpecificContact);
+
+    // =======Remove Contact=====
+    Router.delete('/contact/:id',removeContact);
 // ==========X==Starting Contact From Router==X==========
 
 export default Router;

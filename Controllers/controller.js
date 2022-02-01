@@ -679,4 +679,13 @@ export const Home = (req, res)=>{
             console.log(e.message);
         }
     }
+    // ========Remove Contact=======
+    export const removeContact = async (req,res)=>{
+        try{
+            await Contact.findOneAndDelete({_id: req.params.id});
+            res.status(201).json({message:"Contact Removed Sussesully."});
+        }catch(e){
+            console.log(e.message);
+        }
+    }
 // ==========X===Ending Contact From API Router===X=======
