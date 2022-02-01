@@ -144,7 +144,7 @@ Router.get('/', Home);
     Router.get('/contact',getContactAll);
 
     // ========Update Contact========
-    Router.put('/contact/:email',adminContactBack);
+    Router.put('/contact/:id',adminContactBack);
 
     // ========Get Specific Contact Detailes========
     Router.get('/contact/:email',getSpecificContact);

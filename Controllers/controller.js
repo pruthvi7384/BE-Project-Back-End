@@ -651,14 +651,14 @@ export const Home = (req, res)=>{
          const {name, email, subject, message} = req.body;
 
         // ======Cheacking Filed Is Or Not=======
-         if(!name || !email || !subject || !message){
+         if(!name || !email || !subject || !message || !answer){
              res.status(201).json({message: "Please Filed All Filleds Properly !"});
          }
 
         //==========Update Contact Detailes=========
         try{
             await Contact.findOneAndUpdate(
-                {email: req.params.email},
+                {_id: req.params.id},
                 {$set: req.body}
             );
             res.status(201).json({message: "Contact Detailes Updated Sussesfuly."})
