@@ -157,18 +157,23 @@ export const Home = (req, res)=>{
     // ========Delete Specific Account========
     export const removeAccount = async (req, res)=>{
         try{
-            await User.findOneAndDelete({_id: req.params.id});
-            const doctor = await Doctor.findOne({register_id: req.params.id});
-            if(doctor){
+            const user = await User.findOne({_id: req.params.id});
+            if(user.role === 'doctor'){
                 await Doctor.findOneAndDelete({register_id: req.params.id});
+                await Disease.findOneAndDelete({doctor_id: _req.params.id});
                 res.status(201).json({message:"Doctor Account Removed Sussesully."});
-            }else{
+            }else if(user.role === 'user'){
+                await User.findOneAndDelete({_id: req.params.id});
+                await Chat.findByIdAndDelete({user_id: req.params.id});
+                await Feedback.findByIdAndDelete({user_id: req.params.id});
+                await Question.findByIdAndDelete({user_id: req.params.id});
                 res.status(201).json({message:"User Account Removed Sussesully."});
             }
         }catch(e){
             console.log(e.message);
         }
     }
+
 // ==========X==Ending Account API==X===========
 
 // =========Starting Comman Chat API Creation============
