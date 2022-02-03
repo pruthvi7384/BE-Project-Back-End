@@ -470,9 +470,7 @@ export const Home = (req, res)=>{
                     register_id:req.params.id
                 },
                 {
-                    $set: {
-                       req.body
-                    }
+                    $set: req.body
                 }
             );
             res.status(201).json({message:"Doctor Account Verification Sussesully."});
