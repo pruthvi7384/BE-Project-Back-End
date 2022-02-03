@@ -464,10 +464,6 @@ export const Home = (req, res)=>{
 
     // =========Update Status=========
     export const doctorVerify = async (req, res)=>{
-        // ========Get Verifictaion Detailes=====
-        const status = req.body.verification_status.status;
-        const verify_date = new Date();
-        const replay = req.body.verification_status.replay
         try{
             await Doctor.findOneAndUpdate(
                 {
@@ -475,11 +471,7 @@ export const Home = (req, res)=>{
                 },
                 {
                     $set: {
-                        verification_status:{
-                            status: status,
-                            verify_date: verify_date,
-                            replay : replay
-                        }
+                       req.body
                     }
                 }
             );
