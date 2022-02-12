@@ -159,8 +159,9 @@ export const Home = (req, res)=>{
         try{
             const user = await User.findOne({_id: req.params.id});
             if(user.role === 'doctor'){
+                await User.findOneAndDelete({_id: req.params.id});
                 await Doctor.findOneAndDelete({register_id: req.params.id});
-                await Disease.deleteMany({doctor_id: _req.params.id});
+                await Disease.deleteMany({doctor_id: req.params.id});
                 res.status(201).json({message:"Doctor Account Removed Sussesully."});
             }else if(user.role === 'user'){
                 await User.findOneAndDelete({_id: req.params.id});
