@@ -329,14 +329,13 @@ export const Home = (req, res)=>{
     //========Update Feedbaack=======
     export const updateFeedback = async (req,res)=>{
         //=======Get Detailes From Feedback=======
-        const { status } = req.body;
         try{
             await Feedback.findOneAndUpdate(
                 {
                     _id: req.params.id
                 },
                 {
-                    $set: {status}
+                    $set: req.body
                 }
             );
             res.status(201).json({message:"Feedback Status Change Sussesully."});
