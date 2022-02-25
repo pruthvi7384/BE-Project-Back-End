@@ -266,6 +266,16 @@ export const Home = (req, res)=>{
         }
     }
 
+    // ===============Get Specific Quection==========
+    export const getSpecificQuection = async (req, res)=>{
+        try{
+            const quection = await Question.findOne({_id: req.params.id});
+            res.status(200).send(quection);
+        }catch(e){
+            console.log(e.message);
+        }
+    }
+
     // ========Delete Specific Quection========
     export const removeQuection = async (req, res)=>{
         try{

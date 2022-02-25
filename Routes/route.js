@@ -4,7 +4,7 @@ import express from 'express';
 import '../DB/connection.js';
 
 // ==========All Api Controllers===========
-import { ChatPost, ChatGet, Home, Login, Signup, QuectionPost, getquection, answerquection, removeQuection, getSpecificUser, removeAccount, givesFeedback, getFeedback, removeFeedback, updateFeedback, doctorpost, doctorGet, doctorSpecific, getUser, doctorVerify, getDoctor, addDisease, removeDiseaseInfo, diseaseInfoEdit, allDiseaseInfo, diseaseSpecificDoctor, diseaseSpecific, getVerifyFeedback, verifyallDiseaseInfo, getProfileSpecific, getSpecificUserFeedback, getVerifyFeedbackDiseases, editAccount, doctorAccountEdit, postContact, getContactAll, adminContactBack, getSpecificContact, removeContact, getSpecificContactId } from '../Controllers/controller.js';
+import { ChatPost, ChatGet, Home, Login, Signup, QuectionPost, getquection, answerquection, removeQuection, getSpecificUser, removeAccount, givesFeedback, getFeedback, removeFeedback, updateFeedback, doctorpost, doctorGet, doctorSpecific, getUser, doctorVerify, getDoctor, addDisease, removeDiseaseInfo, diseaseInfoEdit, allDiseaseInfo, diseaseSpecificDoctor, diseaseSpecific, getVerifyFeedback, verifyallDiseaseInfo, getProfileSpecific, getSpecificUserFeedback, getVerifyFeedbackDiseases, editAccount, doctorAccountEdit, postContact, getContactAll, adminContactBack, getSpecificContact, removeContact, getSpecificContactId, getSpecificQuection } from '../Controllers/controller.js';
 
 // =========Assign Express Router========
 const Router = express.Router();
@@ -54,6 +54,9 @@ Router.get('/', Home);
 
     // ========All Quection Route=======
     Router.get('/quection', getquection);
+
+    // ========All Specific Quection Route=======
+    Router.get('/quection/:id', getSpecificQuection);
 
     // ===========Answer Quection=======
     Router.put('/quection/:id',answerquection);
